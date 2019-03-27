@@ -1,0 +1,52 @@
+#SpringBoot Admin 它是在 Spring Boot Actuator 的基础上用于监控 Spring Boot 的应用，且提供简洁的可视化 WEB UI界面。
+#Spring Boot Admin 提供了很多功能，可以监控如：spring-boot项目的基本信息，详细的Health信息、内存信息、JVM信息、垃圾回收信息、
+#各种配置信息（比如数据源、缓存列表和命中率）等，还可以直接修改logger的level。
+
+#设置服务的端口
+server:
+  port: 9999
+
+#eureka相关的配置
+eureka:
+  instance:
+    metadata-map:
+      user.name: "user"         #These two are needed so that the server
+      user.password: "password" #can access the protected client endpoints
+    #定义服务续约任务(心跳)的调用间隔,单位:秒,默认是30
+    leaseRenewalIntervalInSeconds: 10
+    #健康检查页面的URL,相对路径,默认使用HTTP访问,如果需要使用HTTPS则需要使用绝对路径配置,默认是/health
+    health-check-url-path: /actuator/health
+  client:
+    #从Eureka服务器端获取注册信息的间隔时间，单位：秒,默认是30
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      #设置要注册的eureka注册中心
+      defaultZone: http://localhost:8080/eureka-server/eureka/
+
+#spring boot actuator(admin是在这个基础上的,并且admin的依赖也依赖这个actuator依赖的)暴露所有的断点(*表示所有),
+#springboot2.x出于安全考虑,只暴露了/health和/info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  #总是展示健康信息的详情
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+#设置服务的微服务名称
+spring:
+  application:
+    name: admin
+  #
+  profiles:
+    active: dev
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+
+#logback日志配置(更详细的的配置需要去看文档)
+logging:
+  file: ./log/${spring.application.name}.log
