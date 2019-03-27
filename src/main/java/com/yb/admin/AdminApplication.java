@@ -8,15 +8,10 @@ import org.springframework.cloud.client.SpringCloudApplication;
 
 @EnableAdminServer
 @SpringCloudApplication//已经包含@EnableDiscoveryClient
-public class AdminApplication extends SpringBootServletInitializer {
+public class AdminApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(AdminApplication.class);
     }
 
 }

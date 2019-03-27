@@ -9,9 +9,11 @@ server:
 #eureka相关的配置
 eureka:
   instance:
+    #注册给eureka的时候告诉eureka自己的密码
     metadata-map:
-      user.name: "user"         #These two are needed so that the server
-      user.password: "password" #can access the protected client endpoints
+      #这两个是必需的，以便服务器可以访问受保护的客户机端点,这里用变量的方式同步用户名和密码(没有测试是否有效)
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
     #定义服务续约任务(心跳)的调用间隔,单位:秒,默认是30
     leaseRenewalIntervalInSeconds: 10
     #健康检查页面的URL,相对路径,默认使用HTTP访问,如果需要使用HTTPS则需要使用绝对路径配置,默认是/health
@@ -39,9 +41,10 @@ management:
 spring:
   application:
     name: admin
-  #
+  #服务的环境
   profiles:
     active: dev
+  #登录admin的用户名和密码
   security:
     user:
       name: "admin"

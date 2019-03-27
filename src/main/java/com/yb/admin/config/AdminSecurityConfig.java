@@ -15,10 +15,10 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
  */
 @Profile({"dev", "test"})
 @Configuration
-public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
+public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
     private final String adminContextPath;
 
-    public SecuritySecureConfig(AdminServerProperties adminServerProperties) {
+    public AdminSecurityConfig(AdminServerProperties adminServerProperties) {
         this.adminContextPath = adminServerProperties.getContextPath();
     }
 
